@@ -1,0 +1,13 @@
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\controller\ProductsController.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\exception\BadRequestException.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\repository\ProductsRepository.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\entity\Products.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\exception\ProductNotFoundException.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\filter\ProductMinPriceSpecification.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\filter\ProductMaxPriceSpecification.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\filter\ProductsNameDescriptionValidation.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\dto\ErrorObjectReturn.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\exception\advice\ProductNotFoundExceptionAdvice.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\config\SwaggerConfig.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\ProductsMsApplication.java
+C:\Users\Guilherme\Desktop\desafio-compasso\src\main\java\com\uol\compasso\service\ProductsService.java
