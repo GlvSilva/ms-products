@@ -12,5 +12,5 @@
 * RESTful
 
 ### Links 
-H2 Database: http://localhost:9999/h2
-Swagger UI: http://localhost:9999/swagger-ui.html
+* H2 Database: http://localhost:9999/h2
+* Swagger UI: http://localhost:9999/swagger-ui.html
