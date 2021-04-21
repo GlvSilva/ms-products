@@ -1,7 +1,6 @@
 package com.uol.compasso.service;
 
 import com.uol.compasso.entity.Products;
-import com.uol.compasso.exception.BadRequestException;
 import com.uol.compasso.exception.ProductNotFoundException;
 import com.uol.compasso.filter.ProductMaxPriceSpecification;
 import com.uol.compasso.filter.ProductMinPriceSpecification;
@@ -37,7 +36,7 @@ public class ProductsService {
 
     public Products createProduct(Products products) {
         return Optional.of(productsRepository.save(products))
-                .orElseThrow(BadRequestException::new);
+                .orElseThrow(ProductNotFoundException::new);
     }
 
     public Products updateProduct(Long id, Products products) {

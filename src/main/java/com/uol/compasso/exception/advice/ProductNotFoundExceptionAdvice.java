@@ -1,14 +1,15 @@
 package com.uol.compasso.exception.advice;
 
 import com.uol.compasso.response.ErrorObjectReturn;
-import com.uol.compasso.exception.BadRequestException;
 import com.uol.compasso.exception.ProductNotFoundException;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.MethodNotAllowedException;
 
 @RestControllerAdvice
@@ -33,12 +34,12 @@ public class ProductNotFoundExceptionAdvice {
                 .build());
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public   ResponseEntity<Object> badRequest(BadRequestException ex) {
+    @ExceptionHandler(HttpClientErrorException.BadRequest.class)
+    public ResponseEntity<Object> HttpBadRequest(HttpClientErrorException.BadRequest ex) {
         return ResponseEntity.status(400).body(ErrorObjectReturn
                 .builder()
                 .status_code("400")
-                .message("Requisição inválida!")
+                .message("Requisição invalida!")
                 .build());
     }
 
