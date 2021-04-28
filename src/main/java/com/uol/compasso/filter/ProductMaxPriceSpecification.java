@@ -1,6 +1,6 @@
 package com.uol.compasso.filter;
 
-import com.uol.compasso.entity.Products;
+import com.uol.compasso.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -11,11 +11,11 @@ import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 
 @RequiredArgsConstructor
-public class ProductMaxPriceSpecification implements Specification<Products> {
+public class ProductMaxPriceSpecification implements Specification<Product> {
     private final BigDecimal max_price;
 
     @Override
-    public Predicate toPredicate(Root<Products> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         if (max_price == null){
             return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
         }

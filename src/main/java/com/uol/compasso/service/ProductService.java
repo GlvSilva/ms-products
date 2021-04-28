@@ -1,11 +1,11 @@
 package com.uol.compasso.service;
 
-import com.uol.compasso.entity.Products;
+import com.uol.compasso.entity.Product;
 import com.uol.compasso.exception.ProductNotFoundException;
 import com.uol.compasso.filter.ProductMaxPriceSpecification;
 import com.uol.compasso.filter.ProductMinPriceSpecification;
-import com.uol.compasso.filter.ProductsNameDescriptionValidation;
-import com.uol.compasso.repository.ProductsRepository;
+import com.uol.compasso.filter.ProductNameDescriptionValidation;
+import com.uol.compasso.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,27 +19,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductsService {
+public class ProductService {
 
     @Autowired
-    ProductsRepository productsRepository;
+    ProductRepository productsRepository;
 
-    public List<Products> getProducts() {
+    public List<Product> getProducts() {
 
         return productsRepository.findAll();
     }
 
-    public Products getProductsById(Long id) {
+    public Product getProductsById(Long id) {
         return Optional.of(productsRepository.findById(id))
                 .map(p -> p.orElseThrow(ProductNotFoundException::new)).get();
     }
 
-    public Products createProduct(Products products) {
+    public Product createProduct(Product products) {
         return Optional.of(productsRepository.save(products))
                 .orElseThrow(ProductNotFoundException::new);
     }
 
-    public Products updateProduct(Long id, Products products) {
+    public Product updateProduct(Long id, Product products) {
         return productsRepository.findById(id).map(obj -> {
             obj.setName(products.getName());
             obj.setDescription(products.getDescription());
@@ -49,14 +49,14 @@ public class ProductsService {
     }
 
     public ResponseEntity deleteProduct(Long id) {
-        Products products = productsRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        Product products = productsRepository.findById(id).orElseThrow(ProductNotFoundException::new);
         productsRepository.delete(products);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    public List<Products> search(String q, BigDecimal min_price, BigDecimal max_price) {
-        Specification<Products> specification = Specification
-                .where(new ProductsNameDescriptionValidation(q))
+    public List<Product> search(String q, BigDecimal min_price, BigDecimal max_price) {
+        Specification<Product> specification = Specification
+                .where(new ProductNameDescriptionValidation(q))
                 .and(new ProductMinPriceSpecification(min_price))
                 .and(new ProductMaxPriceSpecification(max_price));
         return productsRepository.findAll(specification);

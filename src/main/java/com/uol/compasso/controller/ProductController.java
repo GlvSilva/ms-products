@@ -1,11 +1,13 @@
 package com.uol.compasso.controller;
 
-import com.uol.compasso.entity.Products;
-import com.uol.compasso.service.ProductsService;
+import com.uol.compasso.dto.ProductDto;
+import com.uol.compasso.entity.Product;
+import com.uol.compasso.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,10 @@ import java.util.List;
 @RequestMapping(value = "/products")
 @Api(value="API REST PRODUTOS")
 @CrossOrigin(origins = "*")
-public class ProductsController {
+public class ProductController {
 
     @Autowired
-    ProductsService productsService;
+    ProductService productsService;
 
     @ApiOperation(value = "Cria um novo produto na base de dados")
     @ApiResponses(value = {
@@ -30,7 +32,9 @@ public class ProductsController {
             @ApiResponse(code = 400, message = "Retorna 400 para produtos com erro de validação.")
     })
     @PostMapping
-    public ResponseEntity<?> salvarProdutos(@RequestBody @Valid Products products) {
+    public ResponseEntity<?> salvarProdutos(@RequestBody @Valid ProductDto productsDto) {
+        ModelMapper mapper = new ModelMapper();
+        Product products = mapper.map(productsDto, Product.class);
         return ResponseEntity.ok(productsService.createProduct(products));
     }
 
@@ -41,7 +45,9 @@ public class ProductsController {
             @ApiResponse(code = 404, message = "Retorna 404 quando o produto não existe na base de dados.")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizaProdutos(@PathVariable("id") Long id, @RequestBody Products products) {
+    public ResponseEntity<?> atualizaProdutos(@PathVariable("id") Long id, @RequestBody ProductDto productsDto) {
+        ModelMapper mapper = new ModelMapper();
+        Product products = mapper.map(productsDto, Product.class);
         return ResponseEntity.ok().body(productsService.updateProduct(id, products));
     }
 
@@ -79,10 +85,10 @@ public class ProductsController {
             @ApiResponse(code = 200, message = "Retorna 200 para produtos que foram filtrados com sucesso.")
     })
     @GetMapping("/search")
-    public ResponseEntity<List<Products>> search(@RequestParam(required = false) String q,
+    public ResponseEntity<List<Product>> search(@RequestParam(required = false) String q,
                                                 @RequestParam(required = false) BigDecimal min_price,
                                                 @RequestParam(required = false) BigDecimal max_price) {
-        List<Products> products = this.productsService.search(q, min_price, max_price);
+        List<Product> products = this.productsService.search(q, min_price, max_price);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

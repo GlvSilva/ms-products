@@ -1,10 +1,11 @@
 package com.uol.compasso.exception.advice;
 
-import com.uol.compasso.response.ErrorObjectReturn;
 import com.uol.compasso.exception.ProductNotFoundException;
-import javassist.tools.web.BadHttpRequest;
+import com.uol.compasso.response.ErrorObjectReturn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,8 +35,8 @@ public class ProductNotFoundExceptionAdvice {
                 .build());
     }
 
-    @ExceptionHandler(HttpClientErrorException.BadRequest.class)
-    public ResponseEntity<Object> HttpBadRequest(HttpClientErrorException.BadRequest ex) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return ResponseEntity.status(400).body(ErrorObjectReturn
                 .builder()
                 .status_code("400")
@@ -49,6 +50,15 @@ public class ProductNotFoundExceptionAdvice {
                 .builder()
                 .status_code("401")
                 .message("Erro na requisição, um cabeçalho é necessário.")
+                .build());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public   ResponseEntity<Object> httpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(400).body(ErrorObjectReturn
+                .builder()
+                .status_code("400")
+                .message("Corpo da requisição está inválido.")
                 .build());
     }
 }
